@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam Link Redirector</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 320px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1b2838 0%, #2a475e 100%);
+            color: #c7d5e0;
+        }
+
+        .header {
+            background: #1b2838;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #66c0f4;
+        }
+
+        h1 {
+            color: #66c0f4;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .status {
+            font-size: 12px;
+            color: #8f98a0;
+        }
+
+        .status.active {
+            color: #b8d97b;
+        }
+
+        .status.paused {
+            color: #ff6b6b;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .main-toggle {
+            background: #1b2838;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .toggle-label {
+            font-weight: 500;
+            color: #c7d5e0;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #4a5f7a;
+            transition: 0.3s;
+            border-radius: 26px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #66c0f4;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+
+        .pause-timer {
+            background: #1b2838;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .pause-timer.show {
+            display: block;
+        }
+
+        .timer-text {
+            font-size: 12px;
+            color: #8f98a0;
+            margin-bottom: 10px;
+        }
+
+        .timer-value {
+            font-size: 24px;
+            color: #ff6b6b;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .pause-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .pause-button {
+            background: #1b2838;
+            border: 1px solid #4a5f7a;
+            color: #c7d5e0;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+
+        .pause-button:hover {
+            background: #66c0f4;
+            border-color: #66c0f4;
+            color: #1b2838;
+        }
+
+        .stats {
+            background: #1b2838;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .stat-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .stat-label {
+            color: #8f98a0;
+        }
+
+        .stat-value {
+            color: #66c0f4;
+            font-weight: bold;
+        }
+
+        .footer {
+            padding: 15px 20px;
+            background: #1b2838;
+            border-top: 1px solid #4a5f7a;
+        }
+
+        .settings-link {
+            display: block;
+            text-align: center;
+            color: #66c0f4;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .settings-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎮 Steam Link Redirector</h1>
+        <p class="status" id="statusText">Active</p>
+    </div>
+
+    <div class="content">
+        <div class="main-toggle">
+            <span class="toggle-label">Enable Redirects</span>
+            <label class="toggle-switch">
+                <input type="checkbox" id="enableToggle" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="pause-timer" id="pauseTimer">
+            <div class="timer-text" id="timerText">Redirects paused - resuming in:</div>
+            <div class="timer-value" id="timerValue">--:--</div>
+        </div>
+
+        <div class="pause-options" id="pauseOptions">
+            <button class="pause-button" data-minutes="5">Pause 5m</button>
+            <button class="pause-button" data-minutes="15">Pause 15m</button>
+            <button class="pause-button" data-minutes="30">Pause 30m</button>
+            <button class="pause-button" data-minutes="60">Pause 1hr</button>
+            <button class="pause-button" data-minutes="-1" style="grid-column: 1 / -1;">Pause Indefinitely</button>
+        </div>
+
+        <div class="stats">
+            <div class="stat-row">
+                <span class="stat-label">Total Redirects:</span>
+                <span class="stat-value" id="totalRedirects">0</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Today:</span>
+                <span class="stat-value" id="todayRedirects">0</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <a href="#" class="settings-link" id="settingsLink">⚙️ Open Settings</a>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

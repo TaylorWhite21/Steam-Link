@@ -1,0 +1,18 @@
+{
+  "name": "steam-link-redirector",
+  "version": "1.0.0",
+  "description": "Browser extension that redirects Steam links to the Steam client",
+  "main": "converter.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "steam",
+    "browser-extension",
+    "chrome-extension",
+    "redirect"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {}
+}

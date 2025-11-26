@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam Link Redirector - Settings</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #1b2838 0%, #2a475e 100%);
+            color: #c7d5e0;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: #2a475e;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1b2838;
+            padding: 30px;
+            border-bottom: 2px solid #66c0f4;
+        }
+
+        h1 {
+            color: #66c0f4;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #8f98a0;
+            font-size: 14px;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            color: #66c0f4;
+            font-size: 18px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-description {
+            color: #8f98a0;
+            font-size: 13px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .setting-item {
+            background: #1b2838;
+            padding: 15px 20px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .setting-item:hover {
+            background: #223447;
+        }
+
+        .setting-label {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .setting-name {
+            font-weight: 500;
+            color: #c7d5e0;
+        }
+
+        .setting-desc {
+            font-size: 12px;
+            color: #8f98a0;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #4a5f7a;
+            transition: 0.3s;
+            border-radius: 26px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #66c0f4;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+
+        .status-message {
+            background: #4c6b22;
+            color: #b8d97b;
+            padding: 12px 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-message.show {
+            display: flex;
+        }
+
+        .footer {
+            background: #1b2838;
+            padding: 20px 30px;
+            border-top: 1px solid #4a5f7a;
+            text-align: center;
+            font-size: 12px;
+            color: #8f98a0;
+        }
+
+        .footer a {
+            color: #66c0f4;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stat-box {
+            background: #1b2838;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            color: #66c0f4;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #8f98a0;
+            margin-top: 5px;
+        }
+
+        .reset-button {
+            background: #4a5f7a;
+            color: #c7d5e0;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background 0.2s;
+        }
+
+        .reset-button:hover {
+            background: #5a6f8a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚙️ Steam Link Redirector Settings</h1>
+            <p class="subtitle">Configure how Steam links are handled</p>
+        </div>
+
+        <div class="content">
+            <div id="statusMessage" class="status-message">
+                ✓ Settings saved successfully!
+            </div>
+
+            <!-- Domain Settings -->
+            <div class="section">
+                <div class="section-title">🔗 Domain Redirection</div>
+                <p class="section-description">
+                    Choose which Steam domains should be redirected to the Steam client
+                </p>
+
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <span class="setting-name">Store Pages</span>
+                        <span class="setting-desc">store.steampowered.com</span>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="redirectStore" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <span class="setting-name">Community Pages</span>
+                        <span class="setting-desc">steamcommunity.com</span>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="redirectCommunity" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <span class="setting-name">Help & Support Pages (General)</span>
+                        <span class="setting-desc">help.steampowered.com (usually better in browser)</span>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="redirectHelp">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <span class="setting-name">Help Wizard Pages</span>
+                        <span class="setting-desc">help.steampowered.com/wizard/*</span>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="redirectHelpWizard">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <span class="setting-name">Support Ticket Pages</span>
+                        <span class="setting-desc">help.steampowered.com/ticket/*</span>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="redirectHelpTickets">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="section">
+                <div class="section-title">📊 Statistics</div>
+                <p class="section-description">
+                    Track how many links have been redirected to Steam
+                </p>
+
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="stat-value" id="totalRedirects">0</div>
+                        <div class="stat-label">Total Redirects</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="todayRedirects">0</div>
+                        <div class="stat-label">Today</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="weeklyRedirects">0</div>
+                        <div class="stat-label">This Week</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="monthlyRedirects">0</div>
+                        <div class="stat-label">This Month</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 15px; text-align: center; display: flex; gap: 10px; justify-content: center;">
+                    <button class="reset-button" id="exportCSV">Export CSV</button>
+                    <button class="reset-button" id="exportJSON">Export JSON</button>
+                    <button class="reset-button" id="resetStats">Reset Statistics</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Steam Link Redirector v1.0.0</p>
+            <p style="margin-top: 8px;">
+                Made with ❤️ for the Steam community
+            </p>
+        </div>
+    </div>
+
+    <script src="options.js"></script>
+</body>
+</html>

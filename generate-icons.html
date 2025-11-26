@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icon Generator - Steam Link Redirector</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #1b2838;
+            color: #c7d5e0;
+        }
+        h1 {
+            color: #66c0f4;
+        }
+        .canvas-container {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            align-items: center;
+        }
+        canvas {
+            border: 2px solid #66c0f4;
+            background: white;
+        }
+        button {
+            background: #66c0f4;
+            color: #1b2838;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #5ab0e4;
+        }
+        .instructions {
+            background: #2a475e;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .info {
+            color: #8f98a0;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎮 Steam Link Redirector - Icon Generator</h1>
+
+    <div class="instructions">
+        <strong>Instructions:</strong>
+        <ol>
+            <li>Click each "Download" button below to save the icons</li>
+            <li>Save them to the <code>icons/</code> folder with the correct names:
+                <ul>
+                    <li>icon16.png</li>
+                    <li>icon48.png</li>
+                    <li>icon128.png</li>
+                </ul>
+            </li>
+            <li>Load the extension in Chrome (chrome://extensions/)</li>
+        </ol>
+    </div>
+
+    <h2>Icon Previews:</h2>
+
+    <div class="canvas-container">
+        <div>
+            <canvas id="canvas16" width="16" height="16"></canvas>
+            <div class="info">16x16</div>
+            <button onclick="downloadIcon('canvas16', 'icon16.png')">Download icon16.png</button>
+        </div>
+
+        <div>
+            <canvas id="canvas48" width="48" height="48"></canvas>
+            <div class="info">48x48</div>
+            <button onclick="downloadIcon('canvas48', 'icon48.png')">Download icon48.png</button>
+        </div>
+
+        <div>
+            <canvas id="canvas128" width="128" height="128"></canvas>
+            <div class="info">128x128</div>
+            <button onclick="downloadIcon('canvas128', 'icon128.png')">Download icon128.png</button>
+        </div>
+    </div>
+
+    <button onclick="downloadAll()" style="background: #4c6b22; color: #b8d97b; font-weight: bold;">
+        📥 Download All Icons
+    </button>
+
+    <script>
+        // Steam colors
+        const STEAM_DARK = '#1b2838';
+        const STEAM_BLUE = '#66c0f4';
+
+        // Draw icon on canvas
+        function drawIcon(canvas) {
+            const ctx = canvas.getContext('2d');
+            const size = canvas.width;
+            const center = size / 2;
+
+            // Clear canvas
+            ctx.clearRect(0, 0, size, size);
+
+            // Background circle (dark)
+            ctx.fillStyle = STEAM_DARK;
+            ctx.beginPath();
+            ctx.arc(center, center, size * 0.45, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Steam-like logo (link/chain icon)
+            ctx.strokeStyle = STEAM_BLUE;
+            ctx.fillStyle = STEAM_BLUE;
+            ctx.lineWidth = Math.max(2, size / 16);
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+
+            if (size >= 48) {
+                // Detailed link icon for larger sizes
+                const linkSize = size * 0.25;
+                const gap = size * 0.1;
+
+                // Left link
+                ctx.beginPath();
+                ctx.arc(center - gap, center, linkSize, Math.PI * 0.7, Math.PI * 1.3);
+                ctx.stroke();
+
+                // Right link
+                ctx.beginPath();
+                ctx.arc(center + gap, center, linkSize, -Math.PI * 0.3, Math.PI * 0.3);
+                ctx.stroke();
+
+                // Connecting line
+                ctx.beginPath();
+                ctx.moveTo(center - gap * 0.5, center - linkSize * 0.5);
+                ctx.lineTo(center + gap * 0.5, center + linkSize * 0.5);
+                ctx.stroke();
+
+                // Arrow (pointing right to indicate direction)
+                const arrowX = center + gap + linkSize * 0.7;
+                const arrowY = center;
+                const arrowSize = size * 0.08;
+
+                ctx.beginPath();
+                ctx.moveTo(arrowX - arrowSize, arrowY - arrowSize);
+                ctx.lineTo(arrowX, arrowY);
+                ctx.lineTo(arrowX - arrowSize, arrowY + arrowSize);
+                ctx.stroke();
+            } else {
+                // Simple design for 16x16
+                // Two circles connected
+                ctx.beginPath();
+                ctx.arc(center - 2, center, 3, 0, Math.PI * 2);
+                ctx.arc(center + 2, center, 3, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Connection
+                ctx.beginPath();
+                ctx.moveTo(center - 1, center);
+                ctx.lineTo(center + 1, center);
+                ctx.stroke();
+            }
+        }
+
+        // Draw all icons on load
+        window.addEventListener('load', () => {
+            drawIcon(document.getElementById('canvas16'));
+            drawIcon(document.getElementById('canvas48'));
+            drawIcon(document.getElementById('canvas128'));
+        });
+
+        // Download single icon
+        function downloadIcon(canvasId, filename) {
+            const canvas = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // Download all icons
+        function downloadAll() {
+            setTimeout(() => downloadIcon('canvas16', 'icon16.png'), 100);
+            setTimeout(() => downloadIcon('canvas48', 'icon48.png'), 300);
+            setTimeout(() => downloadIcon('canvas128', 'icon128.png'), 500);
+            alert('Downloading all 3 icons! Check your Downloads folder.');
+        }
+    </script>
+</body>
+</html>

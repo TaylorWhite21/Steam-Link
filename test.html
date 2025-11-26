@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam Link Redirector - Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #1b2838;
+            color: #c7d5e0;
+        }
+        h1 {
+            color: #66c0f4;
+        }
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #2a475e;
+            border-radius: 5px;
+        }
+        .test-section h2 {
+            color: #66c0f4;
+            margin-top: 0;
+        }
+        a {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #1b2838;
+            color: #66c0f4;
+            text-decoration: none;
+            border-radius: 3px;
+            transition: background-color 0.2s;
+        }
+        a:hover {
+            background-color: #357abd;
+        }
+        .url-display {
+            font-size: 12px;
+            color: #8f98a0;
+            font-family: monospace;
+        }
+        .instructions {
+            background-color: #4c6b22;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎮 Steam Link Redirector Test Page</h1>
+
+    <div class="instructions">
+        <strong>Instructions:</strong> Click any link below. If the extension is working correctly, Steam should open instead of navigating in the browser.
+    </div>
+
+    <div class="test-section">
+        <h2>Store Links</h2>
+        <a href="https://store.steampowered.com/app/730/CounterStrike_2/">
+            Counter-Strike 2
+            <div class="url-display">store.steampowered.com/app/730</div>
+        </a>
+        <a href="https://store.steampowered.com/app/1091500/Cyberpunk_2077/">
+            Cyberpunk 2077
+            <div class="url-display">store.steampowered.com/app/1091500</div>
+        </a>
+        <a href="https://store.steampowered.com/app/570/Dota_2/">
+            Dota 2
+            <div class="url-display">store.steampowered.com/app/570</div>
+        </a>
+        <a href="https://store.steampowered.com/">
+            Steam Store Homepage
+            <div class="url-display">store.steampowered.com</div>
+        </a>
+    </div>
+
+    <div class="test-section">
+        <h2>Community Links</h2>
+        <a href="https://steamcommunity.com/">
+            Steam Community Home
+            <div class="url-display">steamcommunity.com</div>
+        </a>
+        <a href="https://steamcommunity.com/app/730">
+            CS2 Community Hub
+            <div class="url-display">steamcommunity.com/app/730</div>
+        </a>
+        <a href="https://steamcommunity.com/id/gabelogannewell">
+            Example Profile (by ID)
+            <div class="url-display">steamcommunity.com/id/gabelogannewell</div>
+        </a>
+    </div>
+
+    <div class="test-section">
+        <h2>Bundle & Package Links</h2>
+        <a href="https://store.steampowered.com/bundle/232/Valve_Complete_Pack/">
+            Valve Complete Pack (Bundle)
+            <div class="url-display">store.steampowered.com/bundle/232</div>
+        </a>
+        <a href="https://store.steampowered.com/sub/54029/">
+            Counter-Strike Complete (Package)
+            <div class="url-display">store.steampowered.com/sub/54029</div>
+        </a>
+    </div>
+
+    <div class="test-section">
+        <h2>Converter Test Tool</h2>
+        <p>Enter a Steam URL to see what it converts to:</p>
+        <input type="text" id="urlInput" placeholder="https://store.steampowered.com/app/730"
+               style="width: 100%; padding: 10px; margin: 10px 0; background: #1b2838; color: #c7d5e0; border: 1px solid #66c0f4; border-radius: 3px;">
+        <button onclick="testConversion()"
+                style="padding: 10px 20px; background: #66c0f4; color: #1b2838; border: none; border-radius: 3px; cursor: pointer;">
+            Convert
+        </button>
+        <div id="result" style="margin-top: 15px; padding: 10px; background: #1b2838; border-radius: 3px; min-height: 30px;"></div>
+    </div>
+
+    <script src="converter.js"></script>
+    <script>
+        function testConversion() {
+            const input = document.getElementById('urlInput').value;
+            const result = document.getElementById('result');
+
+            if (!input) {
+                result.innerHTML = '<span style="color: #ff6b6b;">Please enter a URL</span>';
+                return;
+            }
+
+            const converted = convertToSteamProtocol(input);
+
+            if (converted) {
+                result.innerHTML = `
+                    <strong style="color: #4c6b22;">✓ Converts to:</strong><br>
+                    <code style="color: #66c0f4;">${converted}</code>
+                `;
+            } else {
+                result.innerHTML = '<span style="color: #ff6b6b;">✗ Not a convertible Steam URL</span>';
+            }
+        }
+    </script>
+</body>
+</html>
