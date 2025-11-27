@@ -1,8 +1,8 @@
-# 🎮 Steam Link Redirector
+# Steam Link Redirector
 
-**Automatically open Steam links in the Steam client instead of your browser.**
+**Tired of Steam links opening in your browser? This extension fixes that.**
 
-A browser extension that seamlessly redirects Steam web links (store pages, community profiles, workshop items, etc.) to launch directly in the Steam desktop application.
+Steam Link Redirector is a browser extension that automatically redirects Steam web links to your Steam desktop client. Click a store page, workshop item, or community profile anywhere on the web, and it opens directly in Steam—no more tabs you don't need.
 
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)]()
 [![License](https://img.shields.io/badge/license-MIT-green.svg)]()
@@ -14,132 +14,174 @@ A browser extension that seamlessly redirects Steam web links (store pages, comm
 
 ---
 
-## 🌐 Browser Support
+## Browser Support
 
-**Works on ALL major browsers:**
-- ✅ Chrome
-- ✅ Microsoft Edge
-- ✅ Firefox
-- ✅ Opera
-- ✅ Brave
-- ✅ Vivaldi
+Works on all major browsers:
+- Chrome
+- Microsoft Edge
+- Firefox
+- Opera
+- Brave
+- Vivaldi
 
-See [BROWSERS.md](BROWSERS.md) for installation guides for each browser.
-
----
-
-## ✨ Features
-
-- **🔄 Automatic Redirection** - Click any Steam link, it opens in Steam
-- **🌐 Cross-Browser** - Works on Chrome, Firefox, Edge, Opera, Brave, Vivaldi
-- **⏸️ Pause Controls** - Temporarily disable (5m, 15min, 30m, 1hr, or indefinitely)
-- **📊 Statistics** - Track redirects (today, this week, this month, all-time)
-- **💾 Export Data** - Download stats as CSV or JSON
-- **⚙️ Granular Settings** - Control which Steam domains to redirect
-- **🎯 Visual Indicators** - Extension badge shows status at a glance
-- **🧪 Fully Tested** - 23+ unit tests covering all URL patterns
+Need help with a specific browser? Check out [BROWSERS.md](BROWSERS.md) for installation guides.
 
 ---
 
-## 🚀 Quick Start
+## What It Does
 
-### For Chrome/Edge/Opera/Brave/Vivaldi
+The extension is simple: when you click a Steam link anywhere on the web, it intercepts the URL and opens it in your Steam client instead of your browser. The tab closes automatically, and you're taken directly to the right page in Steam.
 
-Use the Chrome installation method - all these browsers are Chromium-based!
+### Features
+
+**Automatic redirection** - Works on store pages, community profiles, workshop items, game hubs, and groups.
+
+**Cross-browser support** - Install once on Chrome, Firefox, Edge, Opera, Brave, or Vivaldi.
+
+**Pause controls** - Need to browse Steam in your browser? Pause for 5 minutes, 15 minutes, 30 minutes, 1 hour, or indefinitely.
+
+**Statistics tracking** - See how many redirects happened today, this week, this month, or all time.
+
+**Export your data** - Download your stats as CSV or JSON anytime.
+
+**Domain controls** - Choose which Steam domains get redirected (store, community, help pages).
+
+**Privacy-first** - All data stays on your device. Nothing is sent to external servers.
+
+---
+
+## Quick Start
+
+### For Chrome, Edge, Opera, Brave, and Vivaldi
+
+These browsers all use the same installation method since they're built on Chromium.
+
+**Step 1: Install extension (1 minute)**
+1. Go to `chrome://extensions/` (or your browser's equivalent)
+2. Turn on "Developer mode" (toggle in the top-right)
+3. Click "Load unpacked"
+4. Select the `Steam Link` folder
+5. Done! The extension appears in your toolbar
+
+**Step 2: First-time setup (one click)**
+1. Click any Steam link (you can open `test.html` to try it)
+2. Your browser asks: "Open Steam?"
+3. Check "Always allow steam links"
+4. Click "Open Steam"
+
+That's it. Every Steam link from now on will open in Steam automatically.
 
 ### For Firefox
 
-See [BROWSERS.md](BROWSERS.md) for Firefox-specific installation.
+Firefox uses a slightly different installation process. See [BROWSERS.md](BROWSERS.md) for the full Firefox guide.
 
 ---
 
-## Installation (Chrome/Edge/Opera/Brave/Vivaldi)
+## How It Works
 
-### 1. Generate Icons (30 seconds)
-1. Open `generate-icons.html` in your browser
-2. Click **"Download All Icons"**
-3. Save the 3 files to the `icons/` folder
+Here's what happens when you click a Steam link:
 
-### 2. Install Extension (1 minute)
-1. Open Chrome and go to `chrome://extensions/`
-2. Enable **"Developer mode"** (top-right toggle)
-3. Click **"Load unpacked"**
-4. Select the `Steam Link` folder
-5. Extension now appears in your toolbar! ✅
-
-### 3. First-Time Setup (one click)
-1. Click any Steam link (try opening `test.html`)
-2. Chrome asks: **"Open Steam?"**
-3. ✅ **Check "Always allow steam links"**
-4. Click **"Open Steam"**
-5. Done! Future links open automatically
-
----
-
-## 📖 How It Works
-
-1. You click a Steam link anywhere (Reddit, Discord, Google, etc.)
-2. Extension intercepts the URL
-3. Converts it to `steam://` protocol
-4. Chrome launches Steam client
-5. Tab closes automatically
-6. Steam opens to the correct page
+1. The extension intercepts the URL
+2. Converts it to a `steam://` protocol URL
+3. Your browser launches the Steam client
+4. The tab closes automatically
+5. Steam opens to the correct page
 
 ### Supported URLs
 
-| Type | Example | Opens In Steam |
-|------|---------|----------------|
-| Store Page | `store.steampowered.com/app/730` | ✅ Game store page |
-| Community Profile | `steamcommunity.com/id/username` | ✅ User profile |
-| Workshop Item | `steamcommunity.com/sharedfiles/...` | ✅ Workshop page |
-| Game Hub | `steamcommunity.com/app/730` | ✅ Community hub |
-| Groups | `steamcommunity.com/groups/...` | ✅ Group page |
+The extension handles all major Steam URL types:
+
+| Type | Example | What Opens |
+|------|---------|------------|
+| Store pages | `store.steampowered.com/app/730` | Game store page in Steam |
+| Community profiles | `steamcommunity.com/id/username` | User profile in Steam |
+| Workshop items | `steamcommunity.com/sharedfiles/...` | Workshop page in Steam |
+| Game hubs | `steamcommunity.com/app/730` | Community hub in Steam |
+| Groups | `steamcommunity.com/groups/...` | Group page in Steam |
 
 ---
 
-## 🎛️ Using the Extension
+## Using the Extension
 
-### Extension Icon (Click It!)
-- **Toggle on/off** - Instant enable/disable
-- **Pause temporarily** - 5min, 15min, 30min, 1hr, or indefinitely
-- **View statistics** - See redirect counts
-- **Access settings** - Link to options page
+### Extension Icon
 
-### Settings Page (Right-click → Options)
-- **Domain Controls**:
-  - Store pages (ON by default)
-  - Community pages (ON by default)
-  - Help pages (OFF by default - better in browser)
-  - Granular help controls (Wizard, Tickets)
-- **Statistics**:
-  - Total redirects (all-time)
-  - Today's count
-  - This week's count
-  - This month's count
-- **Export**: Download as CSV or JSON
-- **Reset**: Clear all statistics
+Click the extension icon in your toolbar to:
+- Toggle the extension on or off
+- Pause for a set amount of time
+- View redirect statistics
+- Access the settings page
+
+### Settings Page
+
+Right-click the extension icon and select "Options" to configure:
+
+**Domain controls** - Choose which Steam domains to redirect:
+- Store pages (on by default)
+- Community pages (on by default)
+- Help pages (off by default—these are usually better in a browser)
+- Specific help sections (wizard pages, ticket pages)
+
+**Statistics** - View your redirect counts:
+- Total (all-time)
+- Today
+- This week
+- This month
+
+**Export** - Download your data as CSV or JSON
+
+**Reset** - Clear all statistics
 
 ### Pause Feature
-Perfect for when you want to browse Steam in your browser:
-- Click extension icon → Choose pause duration
-- Badge shows ⏸ or OFF when paused
-- Auto-resumes when timer expires
-- Or pause indefinitely until you manually resume
+
+Sometimes you want to browse Steam in your browser. That's what the pause feature is for.
+
+Click the extension icon and choose a pause duration:
+- 5 minutes
+- 15 minutes
+- 30 minutes
+- 1 hour
+- Until you turn it back on
+
+While paused, the extension badge shows a pause symbol or "OFF". When the timer expires, redirects resume automatically.
 
 ---
 
-## 🧪 Testing
+## Privacy
+
+Your privacy matters. Here's what this extension does and doesn't do:
+
+**What gets tracked:**
+- Number of redirects (total, daily, weekly, monthly)
+- Historical data for the last 90 days
+- All stored locally on your device
+
+**What doesn't get tracked:**
+- Which specific links you clicked
+- Any personal information
+- Your browsing history
+- Nothing is sent to external servers
+
+**Data export:**
+- CSV format: Daily counts and summary statistics
+- JSON format: Structured data with metadata
+- Use it for personal tracking or data analysis
+
+---
+
+## Testing
 
 ### Run Unit Tests
+
+The extension includes 23 unit tests covering all URL patterns:
+
 ```bash
 npm test
 # or
 node test.js
 ```
 
-**Result:** 23 tests covering all Steam URL patterns
-
 ### Manual Testing
+
 1. Open `test.html` in your browser
 2. Click any Steam link
 3. Verify Steam opens correctly
@@ -147,112 +189,127 @@ node test.js
 
 ---
 
-## 📊 Statistics & Privacy
-
-### What Gets Tracked
-- Number of redirects (total, daily, weekly, monthly)
-- Historical data (last 90 days)
-- **All stored locally** - nothing sent anywhere
-
-### What Doesn't Get Tracked
-- ❌ Which specific links you clicked
-- ❌ Personal information
-- ❌ Browsing history
-- ❌ No external servers, no analytics, no tracking
-
-### Export Your Data
-- CSV format: Historical daily counts + summary
-- JSON format: Structured data with metadata
-- Use for personal tracking or data analysis
-
----
-
-## ⚙️ Configuration
+## Configuration
 
 ### Domain Settings
-Choose which Steam domains to redirect:
-- **Store** (`store.steampowered.com`) - Game store pages
-- **Community** (`steamcommunity.com`) - Profiles, workshops, hubs
-- **Help** (`help.steampowered.com`) - Support pages (OFF by default)
-  - Wizard pages - `help.steampowered.com/wizard/*`
-  - Ticket pages - `help.steampowered.com/ticket*`
 
-### Chrome Protocol Settings
-To change "Always allow" behavior:
-1. Go to `chrome://settings/content/protocolHandlers`
+Choose which Steam domains to redirect:
+
+**Store** (`store.steampowered.com`) - Game store pages, bundles, packages
+
+**Community** (`steamcommunity.com`) - Profiles, groups, workshops, game hubs
+
+**Help** (`help.steampowered.com`) - Support pages (off by default)
+  - Wizard pages: `help.steampowered.com/wizard/*`
+  - Ticket pages: `help.steampowered.com/ticket*`
+
+Help pages are off by default because they're often easier to navigate in a browser.
+
+### Protocol Handler Settings
+
+To change the "Always allow" behavior:
+
+1. Go to `chrome://settings/content/protocolHandlers` (or your browser's equivalent)
 2. Find `steam` in the list
 3. Change to "Allow", "Ask", or "Block"
 
 ---
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
-### Extension Doesn't Redirect
-**Check:**
-- Extension icon badge (⏸ or OFF = disabled)
-- Settings → Verify domains are toggled ON
-- Test `steam://store/730` in address bar
+### Extension doesn't redirect
 
-**If Steam doesn't open from address bar:**
-- Steam client may not be installed
-- Protocol handler not registered
-- Solution: Reinstall Steam or run as Administrator
+**Check these first:**
+- Look at the extension badge. If it shows a pause symbol or "OFF", the extension is disabled.
+- Open settings and verify the domains you want are toggled on.
+- Test by typing `steam://store/730` in your address bar. If Steam doesn't open, the issue is with your Steam installation.
 
-### Statistics Not Updating
-- Extension might be paused (check badge)
-- Reload extension at `chrome://extensions/`
+**If Steam doesn't open from the address bar:**
+- Steam client might not be installed
+- Protocol handler might not be registered
+- Try reinstalling Steam or running it as Administrator
 
-### Dialog Appears Every Time
-- You didn't check "Always allow steam links"
-- Fix: Click a link, check the box, click "Open Steam"
+### Statistics not updating
 
-### Need More Help?
-See [INSTALLATION.md](INSTALLATION.md) for detailed troubleshooting
+- Check if the extension is paused (look at the badge)
+- Try reloading the extension at `chrome://extensions/`
+
+### Dialog appears every time
+
+You didn't check "Always allow steam links" the first time. To fix:
+- Click any Steam link
+- Check the "Always allow" box
+- Click "Open Steam"
+
+### Need more help?
+
+See [INSTALLATION.md](INSTALLATION.md) for detailed troubleshooting.
 
 ---
 
-## 🛠️ Development
+## Development
 
 ### Project Structure
+
 ```
 Steam Link/
-├── manifest.json          # Extension config
+├── manifest.json          # Chrome/Edge/Opera config
+├── manifest-firefox.json  # Firefox config
 ├── background.js          # Core redirect logic
-├── converter.js           # URL → steam:// conversion
+├── converter.js           # URL to steam:// conversion
 ├── popup.html/js         # Toolbar popup
 ├── options.html/js       # Settings page
 ├── test.js               # Unit tests
 ├── test.html             # Interactive testing
+├── build.bat             # Build script for all browsers
 └── icons/                # Extension icons
 ```
 
 ### For Developers
-- **Technical docs**: See [claude.md](claude.md)
-- **Future plans**: See [ROADMAP.md](ROADMAP.md)
-- **Full installation guide**: See [INSTALLATION.md](INSTALLATION.md)
+
+- **Technical documentation**: [claude.md](claude.md)
+- **Future plans**: [ROADMAP.md](ROADMAP.md)
+- **Installation guide**: [INSTALLATION.md](INSTALLATION.md)
+- **Browser support**: [BROWSERS.md](BROWSERS.md)
+- **Security**: [SECURITY.md](SECURITY.md)
 
 ### Running Tests
+
 ```bash
 npm test  # Runs 23 unit tests
 ```
 
 All tests must pass before committing changes.
 
+### Building for Distribution
+
+```bash
+build.bat
+```
+
+This creates:
+- `build/chrome/` - Chrome, Edge, Opera, Brave, Vivaldi
+- `build/firefox/` - Firefox
+- `build/steam-link-redirector-chrome.zip` - Ready for Chrome Web Store
+- `build/steam-link-redirector-firefox.zip` - Ready for Firefox Add-ons
+
 ---
 
-## 🗺️ Roadmap
+## Roadmap
 
-### ✅ Version 1.0 (Current)
+### Version 1.0 (Current)
+
 - Core redirection functionality
 - Pause controls with multiple durations
-- Statistics tracking (4 metrics)
+- Statistics tracking
 - CSV/JSON export
-- Granular domain controls
-- Extension badge indicators
+- Domain controls
+- Cross-browser support (Chrome, Firefox, Edge, Opera, Brave, Vivaldi)
 - 23+ unit tests
 
-### 🔮 Future Versions
-- **1.1**: Firefox support
+### Future Versions
+
+- **1.1**: Enhanced Firefox features
 - **1.2**: Context menu "Open in Steam" option
 - **2.0**: System-wide protocol handler (works with Discord desktop)
 - **3.0**: Advanced features (link preview, wishlist integration)
@@ -261,31 +318,26 @@ See [ROADMAP.md](ROADMAP.md) for detailed plans.
 
 ---
 
-## 📄 License
+## Contributing
+
+Contributions are welcome! See [SECURITY.md](SECURITY.md) for security guidelines.
+
+---
+
+## License
 
 MIT License - Free to use, modify, and distribute.
 
-See the LICENSE file for details.
+See [LICENSE](LICENSE) for details.
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
-- Built with Chrome Extension Manifest V3
-- Uses Steam's `steam://` protocol handler
-- Icon generator included for easy setup
-- Designed for the Steam gaming community
+Built with Chrome Extension Manifest V3 and Firefox Manifest V2. Uses Steam's `steam://` protocol handler. Designed for PC gamers who prefer the Steam client over the browser.
 
 ---
 
-## 📞 Support
+**Made for PC gamers**
 
-- **Issues**: Check [INSTALLATION.md](INSTALLATION.md) troubleshooting section
-- **Questions**: Read [claude.md](claude.md) for technical details
-- **Contributing**: Pull requests welcome (GitHub repo coming soon)
-
----
-
-**Made with ❤️ for PC gamers who prefer the Steam client**
-
-🎮 **Install it. Set "Always allow". Enjoy seamless Steam links!**
+Install it. Click "Always allow". Enjoy seamless Steam links.

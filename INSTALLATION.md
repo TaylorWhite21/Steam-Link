@@ -7,24 +7,7 @@
 
 ## Step-by-Step Installation
 
-### 1. Prepare the Extension
-
-Before installing, you need icon files. You have two options:
-
-#### Option A: Use Placeholder Icons (Quick Testing)
-Create three simple placeholder PNG files in the `icons/` folder:
-- `icon16.png` (16x16 pixels)
-- `icon48.png` (48x48 pixels)
-- `icon128.png` (128x128 pixels)
-
-You can use any image editor or online tools to create these.
-
-#### Option B: Use Steam Branding (Recommended)
-1. Download or create Steam-themed icons
-2. Save them as `icon16.png`, `icon48.png`, and `icon128.png` in the `icons/` folder
-3. See `icons/ICONS_NEEDED.md` for more details
-
-### 2. Load the Extension in Chrome
+### 1. Load the Extension in Chrome
 
 1. Open Chrome (or Edge, Brave, etc.)
 2. Navigate to the extensions page:
@@ -42,7 +25,7 @@ You can use any image editor or online tools to create these.
 
 6. The extension should now appear in your extensions list
 
-### 3. Verify Installation
+### 2. Verify Installation
 
 You should see "Steam Link Redirector" in your extensions list with:
 - ✓ Enabled toggle switched ON

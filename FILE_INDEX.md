@@ -53,7 +53,6 @@ Quick reference for all files in the project.
 
 | File | Purpose |
 |------|---------|
-| **[generate-icons.html](generate-icons.html)** | Icon generator tool - creates placeholder PNGs |
 | **[build.bat](build.bat)** | Build script - packages for Chrome & Firefox |
 | **[setup-git.bat](setup-git.bat)** | Git initialization helper script |
 | **[package.json](package.json)** | npm configuration - defines test script |
@@ -90,9 +89,6 @@ Quick reference for all files in the project.
 **Run tests?**
 → `npm test` or `node test.js`
 
-**Generate icons?**
-→ Open [generate-icons.html](generate-icons.html)
-
 **Modify UI?**
 → Edit [popup.html](popup.html) or [options.html](options.html)
 
@@ -106,7 +102,7 @@ Quick reference for all files in the project.
 
 ## 📊 Project Stats
 
-- **Total Files**: 24 files
+- **Total Files**: 22 files
 - **Documentation**: 7 markdown files
 - **Code Files**: 8 JavaScript/HTML files
 - **Manifests**: 2 (Chrome & Firefox)
