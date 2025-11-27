@@ -2,6 +2,9 @@
  * Options page script for Steam Link Redirector
  */
 
+// Cross-browser compatibility
+const browserAPI = typeof browser !== 'undefined' ? browser : chrome;
+
 // Default settings
 const DEFAULT_SETTINGS = {
   redirectStore: true,
@@ -19,14 +22,14 @@ const DEFAULT_SETTINGS = {
 
 // Load settings from storage
 async function loadSettings() {
-  const settings = await chrome.storage.sync.get(DEFAULT_SETTINGS);
+  const settings = await browserAPI.storage.sync.get(DEFAULT_SETTINGS);
 
   // Reset today's count if it's a new day
   const today = new Date().toDateString();
   if (settings.lastResetDate !== today) {
     settings.todayRedirects = 0;
     settings.lastResetDate = today;
-    await chrome.storage.sync.set({
+    await browserAPI.storage.sync.set({
       todayRedirects: 0,
       lastResetDate: today
     });
@@ -37,7 +40,7 @@ async function loadSettings() {
 
 // Save settings to storage
 async function saveSettings(settings) {
-  await chrome.storage.sync.set(settings);
+  await browserAPI.storage.sync.set(settings);
   showStatusMessage();
 }
 

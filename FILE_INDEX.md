@@ -9,7 +9,9 @@ Quick reference for all files in the project.
 | File | Purpose | Who It's For |
 |------|---------|--------------|
 | **[README.md](README.md)** | Main documentation - features, installation, usage | **Everyone - START HERE** |
+| **[BROWSERS.md](BROWSERS.md)** | Multi-browser installation guide | Users on Firefox/Edge/Opera |
 | **[INSTALLATION.md](INSTALLATION.md)** | Detailed installation guide with troubleshooting | Users needing help |
+| **[SECURITY.md](SECURITY.md)** | Security policy and privacy details | Security-conscious users |
 | **[claude.md](claude.md)** | Complete technical documentation | Developers & AI assistants |
 | **[ROADMAP.md](ROADMAP.md)** | Future development plans | Contributors & curious users |
 | **[FILE_INDEX.md](FILE_INDEX.md)** | This file - navigation guide | Everyone |
@@ -20,9 +22,10 @@ Quick reference for all files in the project.
 
 | File | Lines | Purpose |
 |------|-------|---------|
-| **[manifest.json](manifest.json)** | ~40 | Extension configuration (Manifest V3) |
-| **[background.js](background.js)** | ~230 | Service worker - URL interception & redirect logic |
-| **[converter.js](converter.js)** | ~100 | Pure function: URL → steam:// conversion |
+| **[manifest.json](manifest.json)** | ~35 | Chrome/Edge/Opera configuration (Manifest V3) |
+| **[manifest-firefox.json](manifest-firefox.json)** | ~40 | Firefox configuration (Manifest V2) |
+| **[background.js](background.js)** | ~240 | Service worker - URL interception & redirect logic (cross-browser) |
+| **[converter.js](converter.js)** | ~100 | Pure function: URL → steam:// conversion (cross-browser) |
 
 ---
 
@@ -31,9 +34,9 @@ Quick reference for all files in the project.
 | File | Lines | Purpose |
 |------|-------|---------|
 | **[popup.html](popup.html)** | ~250 | Toolbar popup UI |
-| **[popup.js](popup.js)** | ~200 | Popup logic (pause, stats, settings) |
+| **[popup.js](popup.js)** | ~240 | Popup logic (pause, stats, settings) - cross-browser |
 | **[options.html](options.html)** | ~320 | Full settings page UI |
-| **[options.js](options.js)** | ~180 | Settings logic (domain controls, export) |
+| **[options.js](options.js)** | ~185 | Settings logic (domain controls, export) - cross-browser |
 
 ---
 
@@ -46,12 +49,16 @@ Quick reference for all files in the project.
 
 ---
 
-## 🛠️ Utilities
+## 🛠️ Utilities & Build
 
 | File | Purpose |
 |------|---------|
 | **[generate-icons.html](generate-icons.html)** | Icon generator tool - creates placeholder PNGs |
+| **[build.bat](build.bat)** | Build script - packages for Chrome & Firefox |
+| **[setup-git.bat](setup-git.bat)** | Git initialization helper script |
 | **[package.json](package.json)** | npm configuration - defines test script |
+| **[.gitignore](.gitignore)** | Git exclusions - build artifacts, temp files |
+| **[LICENSE](LICENSE)** | MIT License |
 
 ---
 
@@ -99,25 +106,41 @@ Quick reference for all files in the project.
 
 ## 📊 Project Stats
 
-- **Total Files**: 17 files
-- **Documentation**: 5 markdown files
+- **Total Files**: 24 files
+- **Documentation**: 7 markdown files
 - **Code Files**: 8 JavaScript/HTML files
+- **Manifests**: 2 (Chrome & Firefox)
+- **Build Scripts**: 2 batch files
 - **Tests**: 23 unit tests (all passing ✅)
-- **Lines of Code**: ~2,500
+- **Lines of Code**: ~2,700
 - **Version**: 1.0.0
-- **Status**: Production-ready
+- **Status**: Production-ready, cross-browser
+- **Browsers Supported**: Chrome, Firefox, Edge, Opera, Brave, Vivaldi
 
 ---
 
 ## 🎯 File Relationships
 
+### Chrome/Edge/Opera Build
 ```
-manifest.json (entry point)
-├── background.js (service worker)
-│   └── converter.js (imports)
-├── popup.html → popup.js
-└── options.html → options.js
+manifest.json (Manifest V3)
+├── background.js (service worker, cross-browser)
+│   └── converter.js (imports, cross-browser)
+├── popup.html → popup.js (cross-browser)
+└── options.html → options.js (cross-browser)
+```
 
+### Firefox Build
+```
+manifest-firefox.json → manifest.json (Manifest V2)
+├── background.js (background script, cross-browser)
+│   ├── converter.js (loaded via manifest, cross-browser)
+├── popup.html → popup.js (cross-browser)
+└── options.html → options.js (cross-browser)
+```
+
+### Testing
+```
 test.js → converter.js (imports for testing)
 test.html → converter.js (imports for UI testing)
 ```

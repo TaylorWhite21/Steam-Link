@@ -1,7 +1,8 @@
-# Chrome Extension Development
+# Browser Extension Development
 *.crx
 *.pem
 *.zip
+*.xpi
 
 # Node.js
 node_modules/
@@ -32,3 +33,4 @@ desktop.ini
 # Build artifacts
 dist/
 build/
+web-ext-artifacts/

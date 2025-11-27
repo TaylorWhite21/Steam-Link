@@ -1,0 +1,41 @@
+{
+  "manifest_version": 2,
+  "name": "Steam Link Redirector",
+  "version": "1.0.0",
+  "description": "Automatically opens Steam links in the Steam client instead of your browser",
+  "permissions": [
+    "webNavigation",
+    "tabs",
+    "storage",
+    "*://store.steampowered.com/*",
+    "*://steamcommunity.com/*",
+    "*://help.steampowered.com/*"
+  ],
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_title": "Steam Link Redirector"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "scripts": ["converter.js", "background.js"]
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "steam-link-redirector@example.com",
+      "strict_min_version": "91.0"
+    }
+  }
+}

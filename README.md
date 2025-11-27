@@ -2,17 +2,36 @@
 
 **Automatically open Steam links in the Steam client instead of your browser.**
 
-A Chrome extension that seamlessly redirects Steam web links (store pages, community profiles, workshop items, etc.) to launch directly in the Steam desktop application.
+A browser extension that seamlessly redirects Steam web links (store pages, community profiles, workshop items, etc.) to launch directly in the Steam desktop application.
 
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)]()
 [![License](https://img.shields.io/badge/license-MIT-green.svg)]()
 [![Tests](https://img.shields.io/badge/tests-23%20passing-brightgreen.svg)]()
+[![Chrome](https://img.shields.io/badge/Chrome-✓-green.svg)]()
+[![Firefox](https://img.shields.io/badge/Firefox-✓-green.svg)]()
+[![Edge](https://img.shields.io/badge/Edge-✓-green.svg)]()
+[![Opera](https://img.shields.io/badge/Opera-✓-green.svg)]()
+
+---
+
+## 🌐 Browser Support
+
+**Works on ALL major browsers:**
+- ✅ Chrome
+- ✅ Microsoft Edge
+- ✅ Firefox
+- ✅ Opera
+- ✅ Brave
+- ✅ Vivaldi
+
+See [BROWSERS.md](BROWSERS.md) for installation guides for each browser.
 
 ---
 
 ## ✨ Features
 
 - **🔄 Automatic Redirection** - Click any Steam link, it opens in Steam
+- **🌐 Cross-Browser** - Works on Chrome, Firefox, Edge, Opera, Brave, Vivaldi
 - **⏸️ Pause Controls** - Temporarily disable (5m, 15min, 30m, 1hr, or indefinitely)
 - **📊 Statistics** - Track redirects (today, this week, this month, all-time)
 - **💾 Export Data** - Download stats as CSV or JSON
@@ -23,6 +42,18 @@ A Chrome extension that seamlessly redirects Steam web links (store pages, commu
 ---
 
 ## 🚀 Quick Start
+
+### For Chrome/Edge/Opera/Brave/Vivaldi
+
+Use the Chrome installation method - all these browsers are Chromium-based!
+
+### For Firefox
+
+See [BROWSERS.md](BROWSERS.md) for Firefox-specific installation.
+
+---
+
+## Installation (Chrome/Edge/Opera/Brave/Vivaldi)
 
 ### 1. Generate Icons (30 seconds)
 1. Open `generate-icons.html` in your browser

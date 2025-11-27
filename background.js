@@ -3,8 +3,13 @@
  * Intercepts Steam URLs and redirects them to the Steam client
  */
 
-// Import the converter function
-importScripts('converter.js');
+// Cross-browser compatibility: Use browser namespace if available (Firefox), otherwise use chrome (Chrome/Opera/Edge)
+const browserAPI = typeof browser !== 'undefined' ? browser : chrome;
+
+// Import the converter function (Chrome only - Firefox loads via manifest)
+if (typeof importScripts === 'function') {
+  importScripts('converter.js');
+}
 
 // Default settings
 const DEFAULT_SETTINGS = {
@@ -45,7 +50,7 @@ function getMonthString() {
  * Check if redirects are currently enabled
  */
 async function isEnabled() {
-  const settings = await chrome.storage.sync.get(DEFAULT_SETTINGS);
+  const settings = await browserAPI.storage.sync.get(DEFAULT_SETTINGS);
 
   // Check if manually disabled
   if (!settings.enabled) {
@@ -59,7 +64,7 @@ async function isEnabled() {
 
   // If pause expired, re-enable
   if (settings.pauseUntil && new Date(settings.pauseUntil) <= new Date()) {
-    await chrome.storage.sync.set({
+    await browserAPI.storage.sync.set({
       enabled: true,
       pauseUntil: null
     });
@@ -72,7 +77,7 @@ async function isEnabled() {
  * Check if a specific domain should be redirected
  */
 async function shouldRedirectDomain(url) {
-  const settings = await chrome.storage.sync.get(DEFAULT_SETTINGS);
+  const settings = await browserAPI.storage.sync.get(DEFAULT_SETTINGS);
   const urlObj = new URL(url);
   const hostname = urlObj.hostname.toLowerCase();
   const pathname = urlObj.pathname.toLowerCase();
@@ -104,7 +109,7 @@ async function shouldRedirectDomain(url) {
  * Increment redirect statistics
  */
 async function incrementStats() {
-  const settings = await chrome.storage.sync.get(DEFAULT_SETTINGS);
+  const settings = await browserAPI.storage.sync.get(DEFAULT_SETTINGS);
 
   // Reset today's count if it's a new day
   const today = new Date().toDateString();
@@ -146,30 +151,33 @@ async function incrementStats() {
     updates.lastMonthReset = thisMonth;
   }
 
-  await chrome.storage.sync.set(updates);
+  await browserAPI.storage.sync.set(updates);
 }
 
 /**
  * Update extension badge based on state
  */
 async function updateBadge() {
-  const settings = await chrome.storage.sync.get(DEFAULT_SETTINGS);
+  const settings = await browserAPI.storage.sync.get(DEFAULT_SETTINGS);
+
+  // Cross-browser action API (browserAction for Firefox, action for Chrome)
+  const actionAPI = browserAPI.browserAction || browserAPI.action;
 
   if (settings.pauseUntil && new Date(settings.pauseUntil) > new Date()) {
-    chrome.action.setBadgeText({ text: '⏸' });
-    chrome.action.setBadgeBackgroundColor({ color: '#ff6b6b' });
+    actionAPI.setBadgeText({ text: '⏸' });
+    actionAPI.setBadgeBackgroundColor({ color: '#ff6b6b' });
   } else if (!settings.enabled) {
-    chrome.action.setBadgeText({ text: 'OFF' });
-    chrome.action.setBadgeBackgroundColor({ color: '#ff6b6b' });
+    actionAPI.setBadgeText({ text: 'OFF' });
+    actionAPI.setBadgeBackgroundColor({ color: '#ff6b6b' });
   } else {
-    chrome.action.setBadgeText({ text: '' });
+    actionAPI.setBadgeText({ text: '' });
   }
 }
 
 /**
  * Handles web navigation events to Steam domains
  */
-chrome.webNavigation.onBeforeNavigate.addListener(
+browserAPI.webNavigation.onBeforeNavigate.addListener(
   async (details) => {
     // Only process main frame navigations (not iframes)
     if (details.frameId !== 0) {
@@ -197,12 +205,12 @@ chrome.webNavigation.onBeforeNavigate.addListener(
       await incrementStats();
 
       // Navigate the current tab to the steam:// protocol
-      // Chrome will show a dialog asking the user to confirm opening Steam
+      // Browser will show a dialog asking the user to confirm opening Steam
       // If the user checks "Always allow", future redirects will be seamless
-      chrome.tabs.update(details.tabId, { url: steamProtocolUrl });
+      browserAPI.tabs.update(details.tabId, { url: steamProtocolUrl });
 
       // Note: We don't auto-close the tab anymore
-      // If the user clicks "Open Steam", Chrome closes it automatically
+      // If the user clicks "Open Steam", browser closes it automatically
       // If the user clicks "Cancel", they can stay on the tab (which shows the protocol URL)
       // This respects user choice and leverages browser's native protocol handling
     }
@@ -216,7 +224,7 @@ chrome.webNavigation.onBeforeNavigate.addListener(
 );
 
 // Listen for storage changes to update badge
-chrome.storage.onChanged.addListener((_changes, areaName) => {
+browserAPI.storage.onChanged.addListener((_changes, areaName) => {
   if (areaName === 'sync') {
     updateBadge();
   }

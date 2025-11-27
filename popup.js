@@ -2,6 +2,9 @@
  * Popup script for Steam Link Redirector
  */
 
+// Cross-browser compatibility
+const browserAPI = typeof browser !== 'undefined' ? browser : chrome;
+
 // Default settings
 const DEFAULT_SETTINGS = {
   enabled: true,
@@ -15,14 +18,14 @@ let timerInterval = null;
 
 // Load settings from storage
 async function loadSettings() {
-  const settings = await chrome.storage.sync.get(DEFAULT_SETTINGS);
+  const settings = await browserAPI.storage.sync.get(DEFAULT_SETTINGS);
 
   // Reset today's count if it's a new day
   const today = new Date().toDateString();
   if (settings.lastResetDate !== today) {
     settings.todayRedirects = 0;
     settings.lastResetDate = today;
-    await chrome.storage.sync.set({
+    await browserAPI.storage.sync.set({
       todayRedirects: 0,
       lastResetDate: today
     });
@@ -32,7 +35,7 @@ async function loadSettings() {
   if (settings.pauseUntil && new Date(settings.pauseUntil) <= new Date()) {
     settings.pauseUntil = null;
     settings.enabled = true;
-    await chrome.storage.sync.set({
+    await browserAPI.storage.sync.set({
       pauseUntil: null,
       enabled: true
     });
@@ -43,22 +46,25 @@ async function loadSettings() {
 
 // Save settings to storage
 async function saveSettings(settings) {
-  await chrome.storage.sync.set(settings);
+  await browserAPI.storage.sync.set(settings);
 }
 
 // Update badge on extension icon
 function updateBadge(settings) {
+  // Cross-browser action API (browserAction for Firefox, action for Chrome)
+  const actionAPI = browserAPI.browserAction || browserAPI.action;
+
   if (settings.pauseUntil && new Date(settings.pauseUntil) > new Date()) {
     // Paused - show red badge
-    chrome.action.setBadgeText({ text: '⏸' });
-    chrome.action.setBadgeBackgroundColor({ color: '#ff6b6b' });
+    actionAPI.setBadgeText({ text: '⏸' });
+    actionAPI.setBadgeBackgroundColor({ color: '#ff6b6b' });
   } else if (!settings.enabled) {
     // Disabled - show red badge
-    chrome.action.setBadgeText({ text: 'OFF' });
-    chrome.action.setBadgeBackgroundColor({ color: '#ff6b6b' });
+    actionAPI.setBadgeText({ text: 'OFF' });
+    actionAPI.setBadgeBackgroundColor({ color: '#ff6b6b' });
   } else {
     // Active - clear badge
-    chrome.action.setBadgeText({ text: '' });
+    actionAPI.setBadgeText({ text: '' });
   }
 }
 
@@ -216,11 +222,11 @@ async function init() {
   // Settings link
   document.getElementById('settingsLink').addEventListener('click', (e) => {
     e.preventDefault();
-    chrome.runtime.openOptionsPage();
+    browserAPI.runtime.openOptionsPage();
   });
 
   // Listen for storage changes (if settings change in another tab)
-  chrome.storage.onChanged.addListener(async (changes, areaName) => {
+  browserAPI.storage.onChanged.addListener(async (changes, areaName) => {
     if (areaName === 'sync') {
       const settings = await loadSettings();
       updateUI(settings);
